@@ -135,3 +135,30 @@ ails db:migrate
 -- create_table(:portfolios)
    -> 0.5219s
 == 20210325025533 CreatePortfolios: migrated (0.5220s) ========================
+
+rails db:setup
+Database 'devcamp_portfolio_development' already exists
+Database 'devcamp_portfolio_test' already exists
+-- enable_extension("plpgsql")
+   -> 0.0142s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.1861s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.0920s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.1085s
+-- initialize_schema_migrations_table()
+   -> 0.0011s
+-- enable_extension("plpgsql")
+   -> 0.1540s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.1428s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.0918s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.0668s
+-- initialize_schema_migrations_table()
+   -> 0.0670s
+10 blog post created
+5 skills created
+9 portfolio item created
