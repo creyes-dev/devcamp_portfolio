@@ -97,3 +97,41 @@ Loading development environment (Rails 5.2.4.5)
    (10.5ms)  COMMIT
  => #<Skill id: 2, title: "Angular", percent_utilized: 10, created_at: "2021-03-24 04:26:02", updated_at: "2021-03-24 04:26:02"> 
 
+
+rails g scaffold Portfolio title:string subtitle:string body:text main_image:string thumb_image:string
+Running via Spring preloader in process 17246
+      invoke  active_record
+      create    db/migrate/20210325025533_create_portfolios.rb
+      create    app/models/portfolio.rb
+      invoke  resource_route
+       route    resources :portfolios
+      invoke  scaffold_controller
+      create    app/controllers/portfolios_controller.rb
+      invoke    erb
+      create      app/views/portfolios
+      create      app/views/portfolios/index.html.erb
+      create      app/views/portfolios/edit.html.erb
+      create      app/views/portfolios/show.html.erb
+      create      app/views/portfolios/new.html.erb
+      create      app/views/portfolios/_form.html.erb
+      invoke    helper
+      create      app/helpers/portfolios_helper.rb
+      invoke    jbuilder
+      create      app/views/portfolios/index.json.jbuilder
+      create      app/views/portfolios/show.json.jbuilder
+      create      app/views/portfolios/_portfolio.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/portfolios.coffee
+      invoke    scss
+      create      app/assets/stylesheets/portfolios.scss
+      invoke  scss
+    conflict    app/assets/stylesheets/scaffolds.scss
+  Overwrite /home/cristian/proyectos_rails/devcamp_portfolio/devcamp_portfolio/app/assets/stylesheets/scaffolds.scss? (enter "h" for help) [Ynaqdhm] n
+        skip    app/assets/stylesheets/scaffolds.scss
+
+ails db:migrate
+== 20210325025533 CreatePortfolios: migrating =================================
+-- create_table(:portfolios)
+   -> 0.5219s
+== 20210325025533 CreatePortfolios: migrated (0.5220s) ========================
