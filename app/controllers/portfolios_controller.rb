@@ -25,11 +25,9 @@ class PortfoliosController < ApplicationController
 
     respond_to do |format|
       if @portfolio.save
-        format.html { redirect_to @portfolio, notice: "Portfolio was successfully created." }
-        format.json { render :show, status: :created, location: @portfolio }
+        format.html { redirect_to @portfolio, notice: "Your portfolio item is now live." }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @portfolio.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -39,20 +37,19 @@ class PortfoliosController < ApplicationController
     respond_to do |format|
       if @portfolio.update(portfolio_params)
         format.html { redirect_to @portfolio, notice: "Portfolio was successfully updated." }
-        format.json { render :show, status: :ok, location: @portfolio }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @portfolio.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /portfolios/1 or /portfolios/1.json
   def destroy
+    # Destroy/delete the record
     @portfolio.destroy
+    # Redirect
     respond_to do |format|
-      format.html { redirect_to portfolios_url, notice: "Portfolio was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to portfolios_url, notice: "Portfolio was removed." }
     end
   end
 
@@ -64,6 +61,6 @@ class PortfoliosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def portfolio_params
-      params.require(:portfolio).permit(:title, :subtitle, :body, :main_image, :thumb_image)
+      params.require(:portfolio).permit(:title, :subtitle, :body)
     end
 end
