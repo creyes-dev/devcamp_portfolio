@@ -338,3 +338,51 @@ Running via Spring preloader in process 17124
    (0.0ms)  COMMIT
  => nil 
 
+$ rails g migration add_post_status_to_blogs status:integer
+Running via Spring preloader in process 6987
+      invoke  active_record
+      create    db/migrate/20210327180658_add_post_status_to_blogs.rb
+
+$ rails db:migrate
+== 20210327180658 AddPostStatusToBlogs: migrating =============================
+-- add_column(:blogs, :status, :integer, {:default=>0})
+   -> 0.1071s
+== 20210327180658 AddPostStatusToBlogs: migrated (0.1072s) ====================
+
+# Testing blog status enums
+
+$ rails console
+Running via Spring preloader in process 8030
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Blog.create!(title: "Another blog", body: "another blog body")
+   (0.1ms)  BEGIN
+  Blog Exists (1.0ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" IS NOT NULL) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "another-blog"], ["LIMIT", 1]]
+  SQL (37.4ms)  INSERT INTO "blogs" ("title", "body", "created_at", "updated_at", "slug") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Another blog"], ["body", "another blog body"], ["created_at", "2021-03-27 18:21:01.465647"], ["updated_at", "2021-03-27 18:21:01.465647"], ["slug", "another-blog"]]
+   (16.1ms)  COMMIT
+ => #<Blog id: 12, title: "Another blog", body: "another blog body", created_at: "2021-03-27 18:21:01", updated_at: "2021-03-27 18:21:01", slug: "another-blog", status: "draft"> 
+2.4.6 :002 > Blog.last.published!
+  Blog Load (0.3ms)  SELECT  "blogs".* FROM "blogs" ORDER BY "blogs"."id" DESC LIMIT $1  [["LIMIT", 1]]
+   (0.1ms)  BEGIN
+  SQL (0.4ms)  UPDATE "blogs" SET "status" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["status", 1], ["updated_at", "2021-03-27 18:21:34.215383"], ["id", 12]]
+   (16.7ms)  COMMIT
+ => true 
+2.4.6 :003 > Blog.last
+  Blog Load (0.4ms)  SELECT  "blogs".* FROM "blogs" ORDER BY "blogs"."id" DESC LIMIT $1  [["LIMIT", 1]]
+ => #<Blog id: 12, title: "Another blog", body: "another blog body", created_at: "2021-03-27 18:21:01", updated_at: "2021-03-27 18:21:34", slug: "another-blog", status: "published"> 
+
+# Retrieving published blogs
+
+$ rails console
+Running via Spring preloader in process 9591
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Blog.first.published!
+  Blog Load (0.3ms)  SELECT  "blogs".* FROM "blogs" ORDER BY "blogs"."id" ASC LIMIT $1  [["LIMIT", 1]]
+   (0.0ms)  BEGIN
+  SQL (0.2ms)  UPDATE "blogs" SET "status" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["status", 1], ["updated_at", "2021-03-27 18:39:16.731073"], ["id", 1]]
+   (18.1ms)  COMMIT
+ => true 
+2.4.6 :002 > Blog.published
+  Blog Load (0.2ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."status" = $1  [["status", 1]]
+ => #<ActiveRecord::Relation [#<Blog id: 12, title: "Another blog", body: "another blog body", created_at: "2021-03-27 18:21:01", updated_at: "2021-03-27 18:21:34", slug: "another-blog", status: "published">, 
+                              #<Blog id: 1, title: "Blog example 0", body: "Sed ut perspiciatis unde omnis iste natus error si...", created_at: "2021-03-25 03:00:58", updated_at: "2021-03-27 18:39:16", slug: "blog-example-0", status: "published">]>
+
