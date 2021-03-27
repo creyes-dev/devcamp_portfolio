@@ -253,3 +253,88 @@ $ rails db:migrate
 -- add_index(:friendly_id_slugs, :sluggable_type)
    -> 0.0252s
 == 20210327042143 CreateFriendlyIdSlugs: migrated (0.3172s) ===================
+
+$ rails g migration add_slug_to_blogs
+Running via Spring preloader in process 14637
+      invoke  active_record
+      create    db/migrate/20210327045717_add_slug_to_blogs.rb
+
+$ rails d migration add_slug_to_blogs
+Running via Spring preloader in process 15296
+      invoke  active_record
+      remove    db/migrate/20210327045717_add_slug_to_blogs.rb
+
+$ rails g migration add_slug_to_blogs slug:string:uniq
+Running via Spring preloader in process 15525
+      invoke  active_record
+      create    db/migrate/20210327050052_add_slug_to_blogs.rb
+
+$ rails db:migrate
+== 20210327050052 AddSlugToBlogs: migrating ===================================
+-- add_column(:blogs, :slug, :string)
+   -> 0.0005s
+-- add_index(:blogs, :slug, {:unique=>true})
+   -> 0.0649s
+== 20210327050052 AddSlugToBlogs: migrated (0.0655s) ==========================
+
+$ rails c
+Running via Spring preloader in process 16849
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Blog.create!(title: "my great title", body: "asdfasdf")
+   (0.1ms)  BEGIN
+  Blog Exists (12.7ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" IS NOT NULL) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "my-great-title"], ["LIMIT", 1]]
+  SQL (20.4ms)  INSERT INTO "blogs" ("title", "body", "created_at", "updated_at", "slug") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "my great title"], ["body", "asdfasdf"], ["created_at", "2021-03-27 05:18:52.692266"], ["updated_at", "2021-03-27 05:18:52.692266"], ["slug", "my-great-title"]]
+   (7.5ms)  COMMIT
+ => #<Blog id: 11, title: "my great title", body: "asdfasdf", created_at: "2021-03-27 05:18:52", updated_at: "2021-03-27 05:18:52", slug: "my-great-title">
+
+
+# Re-save blogs to get its slug assigned
+
+$ rails c
+Running via Spring preloader in process 17124
+2.4.6 :001 > Blog.find_each(&:save)
+  Blog Load (0.4ms)  SELECT  "blogs".* FROM "blogs" ORDER BY "blogs"."id" ASC LIMIT $1  [["LIMIT", 1000]]
+   (0.1ms)  BEGIN
+  Blog Exists (0.6ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 1) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-0"], ["LIMIT", 1]]
+  SQL (0.2ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-0"], ["updated_at", "2021-03-27 05:22:55.617873"], ["id", 1]]
+   (30.3ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.3ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 2) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-1"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-1"], ["updated_at", "2021-03-27 05:22:55.651373"], ["id", 2]]
+   (4.6ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.2ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 3) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-2"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-2"], ["updated_at", "2021-03-27 05:22:55.659289"], ["id", 3]]
+   (6.0ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.2ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 4) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-3"], ["LIMIT", 1]]
+  SQL (0.2ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-3"], ["updated_at", "2021-03-27 05:22:55.667369"], ["id", 4]]
+   (5.7ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.3ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 5) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-4"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-4"], ["updated_at", "2021-03-27 05:22:55.676044"], ["id", 5]]
+   (4.9ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.2ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 6) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-5"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-5"], ["updated_at", "2021-03-27 05:22:55.684218"], ["id", 6]]
+   (5.1ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.2ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 7) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-6"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-6"], ["updated_at", "2021-03-27 05:22:55.691902"], ["id", 7]]
+   (6.2ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.2ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 8) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-7"], ["LIMIT", 1]]
+  SQL (0.2ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-7"], ["updated_at", "2021-03-27 05:22:55.700193"], ["id", 8]]
+   (6.3ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.3ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 9) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-8"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-8"], ["updated_at", "2021-03-27 05:22:55.709501"], ["id", 9]]
+   (4.6ms)  COMMIT
+   (0.1ms)  BEGIN
+  Blog Exists (0.4ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" != 10) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "blog-example-9"], ["LIMIT", 1]]
+  SQL (0.3ms)  UPDATE "blogs" SET "slug" = $1, "updated_at" = $2 WHERE "blogs"."id" = $3  [["slug", "blog-example-9"], ["updated_at", "2021-03-27 05:22:55.717977"], ["id", 10]]
+   (4.5ms)  COMMIT
+   (0.1ms)  BEGIN
+   (0.0ms)  COMMIT
+ => nil 
+
