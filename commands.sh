@@ -444,4 +444,44 @@ Loading development environment (Rails 5.0.7.2)
   Blog Load (0.3ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."topic_id" = $1  [["topic_id", 1]]
  => #<ActiveRecord::Associations::CollectionProxy [#<Blog id: 13, title: "Some cool ruby stuff", body: "asdfasdf", created_at: "2021-03-28 18:22:37", updated_at: "2021-03-28 18:22:37", slug: "some-cool-ruby-stuff", status: "draft", topic_id: 1>]> 
 
- 
+# db:setup blogs topic
+
+$ rails db:setup
+Database 'devcamp_portfolio_development' already exists
+Database 'devcamp_portfolio_test' already exists
+-- enable_extension("plpgsql")
+   -> 0.0117s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.2208s
+-- create_table("friendly_id_slugs", {:force=>:cascade})
+   -> 0.2922s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.0834s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.1003s
+-- create_table("topics", {:force=>:cascade})
+   -> 0.0834s
+-- add_foreign_key("blogs", "topics")
+   -> 0.0082s
+-- initialize_schema_migrations_table()
+   -> 0.0008s
+-- enable_extension("plpgsql")
+   -> 0.1977s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.3648s
+-- create_table("friendly_id_slugs", {:force=>:cascade})
+   -> 0.2918s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.1253s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.1086s
+-- create_table("topics", {:force=>:cascade})
+   -> 0.1418s
+-- add_foreign_key("blogs", "topics")
+   -> 0.0583s
+-- initialize_schema_migrations_table()
+   -> 0.0012s
+3 topics created
+10 blog post created
+5 skills created
+9 portfolio item created
