@@ -386,3 +386,62 @@ Loading development environment (Rails 5.0.7.2)
  => #<ActiveRecord::Relation [#<Blog id: 12, title: "Another blog", body: "another blog body", created_at: "2021-03-27 18:21:01", updated_at: "2021-03-27 18:21:34", slug: "another-blog", status: "published">, 
                               #<Blog id: 1, title: "Blog example 0", body: "Sed ut perspiciatis unde omnis iste natus error si...", created_at: "2021-03-25 03:00:58", updated_at: "2021-03-27 18:39:16", slug: "blog-example-0", status: "published">]>
 
+$ rails g model Topic title:string
+Running via Spring preloader in process 6120
+      invoke  active_record
+      create    db/migrate/20210328164705_create_topics.rb
+      create    app/models/topic.rb
+
+$ rails db:migrate
+== 20210328164705 CreateTopics: migrating =====================================
+-- create_table(:topics)
+   -> 0.2096s
+== 20210328164705 CreateTopics: migrated (0.2097s) ============================
+
+$ rails g migration add_topic_reference_to_blogs topic:references
+Running via Spring preloader in process 8840
+      invoke  active_record
+      create    db/migrate/20210328180303_add_topic_reference_to_blogs.rb
+
+$ rails db:migrate
+== 20210328180303 AddTopicReferenceToBlogs: migrating =========================
+-- add_reference(:blogs, :topic, {:foreign_key=>true})
+   -> 0.1590s
+== 20210328180303 AddTopicReferenceToBlogs: migrated (0.1591s) ================
+
+# Create topics
+
+$ rails console
+Running via Spring preloader in process 10716
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Topic.create!(title: "Ruby programming")
+   (0.1ms)  BEGIN
+  SQL (0.6ms)  INSERT INTO "topics" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["title", "Ruby programming"], ["created_at", "2021-03-28 18:17:58.899946"], ["updated_at", "2021-03-28 18:17:58.899946"]]
+   (10.1ms)  COMMIT
+ => #<Topic id: 1, title: "Ruby programming", created_at: "2021-03-28 18:17:58", updated_at: "2021-03-28 18:17:58"> 
+2.4.6 :003 > Topic.create!(title: "Software Engineering")
+   (0.3ms)  BEGIN
+  SQL (0.4ms)  INSERT INTO "topics" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["title", "Software Engineering"], ["created_at", "2021-03-28 18:18:41.769089"], ["updated_at", "2021-03-28 18:18:41.769089"]]
+   (13.4ms)  COMMIT
+ => #<Topic id: 2, title: "Software Engineering", created_at: "2021-03-28 18:18:41", updated_at: "2021-03-28 18:18:41"> 
+
+ # Create a blog and associate its topic 
+
+ $ rails console
+Running via Spring preloader in process 11085
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Blog.create!(title: "Some cool ruby stuff", body: 'asdfasdf', topic_id: Topic.first.id)
+  Topic Load (0.2ms)  SELECT  "topics".* FROM "topics" ORDER BY "topics"."id" ASC LIMIT $1  [["LIMIT", 1]]
+   (0.1ms)  BEGIN
+  Blog Exists (1.0ms)  SELECT  1 AS one FROM "blogs" WHERE ("blogs"."id" IS NOT NULL) AND "blogs"."slug" = $1 LIMIT $2  [["slug", "some-cool-ruby-stuff"], ["LIMIT", 1]]
+  SQL (16.1ms)  INSERT INTO "blogs" ("title", "body", "created_at", "updated_at", "slug", "topic_id") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Some cool ruby stuff"], ["body", "asdfasdf"], ["created_at", "2021-03-28 18:22:37.204020"], ["updated_at", "2021-03-28 18:22:37.204020"], ["slug", "some-cool-ruby-stuff"], ["topic_id", 1]]
+   (27.2ms)  COMMIT
+ => #<Blog id: 13, title: "Some cool ruby stuff", body: "asdfasdf", created_at: "2021-03-28 18:22:37", updated_at: "2021-03-28 18:22:37", slug: "some-cool-ruby-stuff", status: "draft", topic_id: 1> 
+2.4.6 :002 > t = Topic.first
+  Topic Load (0.4ms)  SELECT  "topics".* FROM "topics" ORDER BY "topics"."id" ASC LIMIT $1  [["LIMIT", 1]]
+ => #<Topic id: 1, title: "Ruby programming", created_at: "2021-03-28 18:17:58", updated_at: "2021-03-28 18:17:58"> 
+2.4.6 :003 > t.blogs
+  Blog Load (0.3ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."topic_id" = $1  [["topic_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<Blog id: 13, title: "Some cool ruby stuff", body: "asdfasdf", created_at: "2021-03-28 18:22:37", updated_at: "2021-03-28 18:22:37", slug: "some-cool-ruby-stuff", status: "draft", topic_id: 1>]> 
+
+ 
