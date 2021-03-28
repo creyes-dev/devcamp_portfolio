@@ -506,4 +506,17 @@ Loading development environment (Rails 5.0.7.2)
 2.4.6 :005 > Portfolio.where(subtitle: "Ruby on rails").count
    (0.6ms)  SELECT COUNT(*) FROM "portfolios" WHERE "portfolios"."subtitle" = $1  [["subtitle", "Ruby on rails"]]
  => 8 
- 
+
+# Add badge images to skills
+
+$ rails g migration add_badge_to_skills badge:text
+Running via Spring preloader in process 6260
+/home/cristian/.rvm/gems/ruby-2.4.6/gems/spring-2.1.1/lib/spring/application.rb:204: warning: Insecure world writable dir /home/cristian/.rvm/gems/ruby-2.4.6/bin in PATH, mode 040777
+      invoke  active_record
+      create    db/migrate/20210328202247_add_badge_to_skills.rb
+
+$ rails db:migrate
+== 20210328202247 AddBadgeToSkills: migrating =================================
+-- add_column(:skills, :badge, :text)
+   -> 0.0683s
+== 20210328202247 AddBadgeToSkills: migrated (0.0684s) ========================
