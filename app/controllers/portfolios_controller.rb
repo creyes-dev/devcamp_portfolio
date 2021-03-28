@@ -6,6 +6,14 @@ class PortfoliosController < ApplicationController
     @portfolios = Portfolio.all
   end
 
+  def angular
+    @angular_portfolio_items = Portfolio.angular
+  end
+
+  def rubyonrails
+    @angular_rubyonrails_items = Portfolio.ruby_on_rails_portfolio_items
+  end
+
   # GET /portfolios/1 or /portfolios/1.json
   def show
   end

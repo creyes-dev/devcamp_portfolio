@@ -485,3 +485,25 @@ Database 'devcamp_portfolio_test' already exists
 10 blog post created
 5 skills created
 9 portfolio item created
+
+# Query Portfolio subtitle
+
+$ rails c
+Running via Spring preloader in process 14591
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Portfolio.first.subtitle
+  Portfolio Load (0.4ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" ASC LIMIT $1  [["LIMIT", 1]]
+ => "Ruby on rails" 
+2.4.6 :002 > Portfolio.last.subtitle
+  Portfolio Load (0.3ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" DESC LIMIT $1  [["LIMIT", 1]]
+ => "Angular" 
+2.4.6 :003 > Portfolio.where(subtitle: "Ruby on Rails")
+  Portfolio Load (0.3ms)  SELECT "portfolios".* FROM "portfolios" WHERE "portfolios"."subtitle" = $1  [["subtitle", "Ruby on Rails"]]
+ => #<ActiveRecord::Relation []> 
+2.4.6 :004 > Portfolio.where(subtitle: "Ruby on rails")
+  Portfolio Load (0.4ms)  SELECT "portfolios".* FROM "portfolios" WHERE "portfolios"."subtitle" = $1  [["subtitle", "Ruby on rails"]]
+ => #<ActiveRecord::Relation [#<Portfolio id: 1, title: "Portfolio title: 0", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 2, title: "Portfolio title: 1", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 3, title: "Portfolio title: 2", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 4, title: "Portfolio title: 3", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 5, title: "Portfolio title: 4", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 6, title: "Portfolio title: 5", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 7, title: "Portfolio title: 6", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">, #<Portfolio id: 8, title: "Portfolio title: 7", subtitle: "Ruby on rails", body: "But I must explain to you how all this mistaken id...", main_image: "https://via.placeholder.com/600x400", thumb_image: "https://via.placeholder.com/350x200", created_at: "2021-03-28 18:47:12", updated_at: "2021-03-28 18:47:12">]> 
+2.4.6 :005 > Portfolio.where(subtitle: "Ruby on rails").count
+   (0.6ms)  SELECT COUNT(*) FROM "portfolios" WHERE "portfolios"."subtitle" = $1  [["subtitle", "Ruby on rails"]]
+ => 8 
+ 
