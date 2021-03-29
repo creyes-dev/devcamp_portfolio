@@ -520,3 +520,90 @@ $ rails db:migrate
 -- add_column(:skills, :badge, :text)
    -> 0.0683s
 == 20210328202247 AddBadgeToSkills: migrated (0.0684s) ========================
+
+# Creating technologies model
+
+$ rails g model Technology name:string portfolio:references
+Running via Spring preloader in process 11536
+      invoke  active_record
+      create    db/migrate/20210328205233_create_technologies.rb
+      create    app/models/technology.rb
+
+$ rails db:migrate
+== 20210328205233 CreateTechnologies: migrating ===============================
+-- create_table(:technologies)
+   -> 0.3491s
+== 20210328205233 CreateTechnologies: migrated (0.3492s) ======================
+
+# creating a new technology and query technology portfolio
+$ rails c
+Running via Spring preloader in process 13171
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Technology.create!(name: "Rails", portfolio_id: Portfolio.last.id)
+  Portfolio Load (0.2ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" DESC LIMIT $1  [["LIMIT", 1]]
+   (0.1ms)  BEGIN
+  SQL (1.0ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Rails"], ["portfolio_id", 11], ["created_at", "2021-03-28 21:13:12.785773"], ["updated_at", "2021-03-28 21:13:12.785773"]]
+   (22.7ms)  COMMIT
+ => #<Technology id: 1, name: "Rails", portfolio_id: 11, created_at: "2021-03-28 21:13:12", updated_at: "2021-03-28 21:13:12"> 
+2.4.6 :002 > Technology.last.portfolio
+  Technology Load (0.3ms)  SELECT  "technologies".* FROM "technologies" ORDER BY "technologies"."id" DESC LIMIT $1  [["LIMIT", 1]]
+  Portfolio Load (0.3ms)  SELECT  "portfolios".* FROM "portfolios" WHERE "portfolios"."id" = $1 LIMIT $2  [["id", 11], ["LIMIT", 1]]
+ => #<Portfolio id: 11, title: "another portfolio", subtitle: "another portfolio subtitle", body: "another portfolio body", main_image: "http://placehold.it/600x400", thumb_image: "http://placehold.it/350x200", created_at: "2021-03-28 20:39:15", updated_at: "2021-03-28 20:39:15"> 
+
+$ rails db:setup
+Database 'devcamp_portfolio_development' already exists
+Database 'devcamp_portfolio_test' already exists
+-- enable_extension("plpgsql")
+   -> 0.0153s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.3234s
+-- create_table("friendly_id_slugs", {:force=>:cascade})
+   -> 0.3669s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.1086s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.1587s
+-- create_table("technologies", {:force=>:cascade})
+   -> 0.1417s
+-- create_table("topics", {:force=>:cascade})
+   -> 0.0751s
+-- add_foreign_key("blogs", "topics")
+   -> 0.0082s
+-- add_foreign_key("technologies", "portfolios")
+   -> 0.0083s
+-- initialize_schema_migrations_table()
+   -> 0.0009s
+-- enable_extension("plpgsql")
+   -> 0.3072s
+-- create_table("blogs", {:force=>:cascade})
+   -> 0.3735s
+-- create_table("friendly_id_slugs", {:force=>:cascade})
+   -> 0.3173s
+-- create_table("portfolios", {:force=>:cascade})
+   -> 0.0917s
+-- create_table("skills", {:force=>:cascade})
+   -> 0.0919s
+-- create_table("technologies", {:force=>:cascade})
+   -> 0.1586s
+-- create_table("topics", {:force=>:cascade})
+   -> 0.1252s
+-- add_foreign_key("blogs", "topics")
+   -> 0.0501s
+-- add_foreign_key("technologies", "portfolios")
+   -> 0.0081s
+-- initialize_schema_migrations_table()
+   -> 0.0010s
+3 topics created
+10 blog post created
+5 skills created
+9 portfolio item created
+3 technologies created
+
+$ rails c
+Running via Spring preloader in process 14150
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Portfolio.last.technologies.count
+  Portfolio Load (0.2ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" DESC LIMIT $1  [["LIMIT", 1]]
+   (0.4ms)  SELECT COUNT(*) FROM "technologies" WHERE "technologies"."portfolio_id" = $1  [["portfolio_id", 9]]
+ => 3 
+2.4.6 :002 > exit
