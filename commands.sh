@@ -607,3 +607,20 @@ Loading development environment (Rails 5.0.7.2)
    (0.4ms)  SELECT COUNT(*) FROM "technologies" WHERE "technologies"."portfolio_id" = $1  [["portfolio_id", 9]]
  => 3 
 2.4.6 :002 > exit
+
+# Testing nested attributes in object creation
+
+$ rails c
+Running via Spring preloader in process 21862
+/home/cristian/.rvm/gems/ruby-2.4.6/gems/spring-2.1.1/lib/spring/application.rb:204: warning: Insecure world writable dir /home/cristian/.rvm/gems/ruby-2.4.6/bin in PATH, mode 040777
+Loading development environment (Rails 5.0.7.2)
+2.4.6 :001 > Portfolio.create!(title: "Web app", subtitle: "asdfasdf", body: "asdfasdf", technologies_attributes: [{name: 'Ruby'}, {name: 'Rails'}, {name: 'Angular'}, {name: 'Ionic'}])
+   (0.1ms)  BEGIN
+  SQL (0.4ms)  INSERT INTO "portfolios" ("title", "subtitle", "body", "main_image", "thumb_image", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["title", "Web app"], ["subtitle", "asdfasdf"], ["body", "asdfasdf"], ["main_image", "http://placehold.it/600x400"], ["thumb_image", "http://placehold.it/350x200"], ["created_at", "2021-03-29 01:23:49.949174"], ["updated_at", "2021-03-29 01:23:49.949174"]]
+  SQL (0.6ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Ruby"], ["portfolio_id", 10], ["created_at", "2021-03-29 01:23:49.951017"], ["updated_at", "2021-03-29 01:23:49.951017"]]
+  SQL (0.2ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Rails"], ["portfolio_id", 10], ["created_at", "2021-03-29 01:23:49.952082"], ["updated_at", "2021-03-29 01:23:49.952082"]]
+  SQL (0.2ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Angular"], ["portfolio_id", 10], ["created_at", "2021-03-29 01:23:49.952709"], ["updated_at", "2021-03-29 01:23:49.952709"]]
+  SQL (0.2ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Ionic"], ["portfolio_id", 10], ["created_at", "2021-03-29 01:23:49.953325"], ["updated_at", "2021-03-29 01:23:49.953325"]]
+   (16.4ms)  COMMIT
+ => #<Portfolio id: 10, title: "Web app", subtitle: "asdfasdf", body: "asdfasdf", main_image: "http://placehold.it/600x400", thumb_image: "http://placehold.it/350x200", created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49"> 
+
