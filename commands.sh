@@ -623,4 +623,88 @@ Loading development environment (Rails 5.0.7.2)
   SQL (0.2ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Ionic"], ["portfolio_id", 10], ["created_at", "2021-03-29 01:23:49.953325"], ["updated_at", "2021-03-29 01:23:49.953325"]]
    (16.4ms)  COMMIT
  => #<Portfolio id: 10, title: "Web app", subtitle: "asdfasdf", body: "asdfasdf", main_image: "http://placehold.it/600x400", thumb_image: "http://placehold.it/350x200", created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49"> 
+2.4.6 :002 > Portfolio.last.technologies
+  Portfolio Load (0.2ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" DESC LIMIT $1  [["LIMIT", 1]]
+  Technology Load (0.3ms)  SELECT "technologies".* FROM "technologies" WHERE "technologies"."portfolio_id" = $1  [["portfolio_id", 10]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<Technology id: 4, name: "Ruby", portfolio_id: 10, created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49">, #<Technology id: 5, name: "Rails", portfolio_id: 10, created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49">, #<Technology id: 6, name: "Angular", portfolio_id: 10, created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49">, #<Technology id: 7, name: "Ionic", portfolio_id: 10, created_at: "2021-03-29 01:23:49", updated_at: "2021-03-29 01:23:49">]> 
+2.4.6 :003 > Portfolio.last.technologies.count
+  Portfolio Load (0.4ms)  SELECT  "portfolios".* FROM "portfolios" ORDER BY "portfolios"."id" DESC LIMIT $1  [["LIMIT", 1]]
+   (0.5ms)  SELECT COUNT(*) FROM "technologies" WHERE "technologies"."portfolio_id" = $1  [["portfolio_id", 10]]
+ => 4 
 
+$ bundle install
+The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.                                     
+Fetching gem metadata from https://rubygems.org/............
+Using rake 13.0.3
+Using concurrent-ruby 1.1.8
+Using i18n 1.8.9
+Using minitest 5.14.4
+Using thread_safe 0.3.6
+Using tzinfo 1.2.9
+Using activesupport 5.0.7.2
+Using builder 3.2.4
+Using erubis 2.7.0
+Using mini_portile2 2.4.0
+Using nokogiri 1.10.10
+Using rails-dom-testing 2.0.3
+Using crass 1.0.6
+Using loofah 2.9.0
+Using rails-html-sanitizer 1.3.0
+Using actionview 5.0.7.2
+Using rack 2.2.3
+Using rack-test 0.6.3
+Using actionpack 5.0.7.2
+Using nio4r 2.5.7
+Using websocket-extensions 0.1.5
+Using websocket-driver 0.6.5
+Using actioncable 5.0.7.2
+Using globalid 0.4.2
+Using activejob 5.0.7.2
+Using mini_mime 1.0.2
+Using mail 2.7.1
+Using actionmailer 5.0.7.2
+Using activemodel 5.0.7.2
+Using arel 7.1.4
+Using activerecord 5.0.7.2
+Using bcrypt 3.1.16
+Using bindex 0.8.1
+Using bundler 1.17.3
+Using byebug 11.1.3
+Using coffee-script-source 1.12.2
+Using execjs 2.7.0
+Using coffee-script 2.4.1
+Using method_source 1.0.0
+Using thor 1.1.0
+Using railties 5.0.7.2
+Using coffee-rails 4.2.2
+Using orm_adapter 0.5.0
+Fetching responders 3.0.1
+Installing responders 3.0.1
+Fetching warden 1.2.9
+Installing warden 1.2.9
+Fetching devise 4.7.3
+Installing devise 4.7.3
+Using ffi 1.15.0
+Using friendly_id 5.1.0
+Using jbuilder 2.11.2
+Using jquery-rails 4.4.0
+Using rb-fsevent 0.10.4
+Using rb-inotify 0.10.1
+Using listen 3.0.8
+Using pg 0.21.0
+Using puma 3.12.6
+Using sprockets 3.7.2
+Using sprockets-rails 3.2.2
+Using rails 5.0.7.2
+Using sass-listen 4.0.0
+Using sass 3.7.4
+Using tilt 2.0.10
+Using sass-rails 5.0.7
+Using spring 2.1.1
+Using spring-watcher-listen 2.0.1
+Using turbolinks-source 5.2.0
+Using turbolinks 5.2.1
+Using uglifier 4.2.0
+Using web-console 3.7.0
+Bundle complete! 17 Gemfile dependencies, 68 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
