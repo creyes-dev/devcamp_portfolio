@@ -715,7 +715,7 @@ Running via Spring preloader in process 11213
       create  config/locales/devise.en.yml
 ===============================================================================
 
-Depending on your application's configuration some manual setup may be required:
+Depending on your applications configuration some manual setup may be required:
 
   1. Ensure you have defined default url options in your environments files. Here
      is an example of default_url_options appropriate for a development environment
@@ -752,7 +752,6 @@ Depending on your application's configuration some manual setup may be required:
 
 $ rails g devise:views
 Running via Spring preloader in process 16019
-/home/cristian/.rvm/gems/ruby-2.4.6/gems/spring-2.1.1/lib/spring/application.rb:204: warning: Insecure world writable dir /home/cristian/.rvm/gems/ruby-2.4.6/bin in PATH, mode 040777
       invoke  Devise::Generators::SharedViewsGenerator
       create    app/views/devise/shared
       create    app/views/devise/shared/_error_messages.html.erb
@@ -777,3 +776,21 @@ Running via Spring preloader in process 16019
       create    app/views/devise/mailer/password_change.html.erb
       create    app/views/devise/mailer/reset_password_instructions.html.erb
       create    app/views/devise/mailer/unlock_instructions.html.erb
+
+$ rails generate devise User
+Running via Spring preloader in process 17186
+      invoke  active_record
+      create    db/migrate/20210330032752_devise_create_users.rb
+      create    app/models/user.rb
+      insert    app/models/user.rb
+       route  devise_for :users
+
+$ rails db:migrate
+== 20210330032752 DeviseCreateUsers: migrating ================================
+-- create_table(:users)
+   -> 0.1985s
+-- add_index(:users, :email, {:unique=>true})
+   -> 0.0333s
+-- add_index(:users, :reset_password_token, {:unique=>true})
+   -> 0.0335s
+== 20210330032752 DeviseCreateUsers: migrated (0.2656s) =======================
