@@ -1,5 +1,6 @@
 class PortfoliosController < ApplicationController
   before_action :set_portfolio, only: %i[ show edit update destroy ]
+  layout 'portfolio'
 
   # GET /portfolios or /portfolios.json
   def index
@@ -21,6 +22,7 @@ class PortfoliosController < ApplicationController
   # GET /portfolios/new
   def new
     @portfolio = Portfolio.new
+    3.times { @portfolio.technologies.build }
   end
 
   # GET /portfolios/1/edit
