@@ -964,3 +964,13 @@ Use `bundle info [gemname]` to see where a bundled gem is installed.
 Post-install message from petergate:
 NOTICE: As of version 1.5.0, the :admin role has been changed to :root_admin.
 
+$ rails g petergate:install
+Running via Spring preloader in process 4238
+      insert  app/models/user.rb
+      create  db/migrate/20210408001737_add_roles_to_users.rb
+
+$ rails db:migrate
+== 20210408001737 AddRolesToUsers: migrating ==================================
+-- add_column(:users, :roles, :string)
+   -> 0.0194s
+== 20210408001737 AddRolesToUsers: migrated (0.0194s) =========================
