@@ -1,10 +1,24 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <%= image_tag @portfolio.main_image %>
+        </div>
+        <div class="col-md-5">
+            <h1><%= @portfolio.title %></h1>
 
-<%= image_tag @portfolio.main_image %>
+            <hr>
 
-<h1><%= @portfolio.title %></h1>
-<em><%= @portfolio.subtitle %></em>
-<p><%= @portfolio.body %></p>
+            <em><%= @portfolio.subtitle %></em>
+            <p><%= @portfolio.body %></p>
 
-<%= link_to 'Edit', edit_portfolio_path(@portfolio) if logged_in?(:site_admin) %> |
-<%= link_to 'Back', portfolios_path %>
+            <hr>
+
+            <h3>Technologies Used:</h3>
+
+            <% @portfolio.technologies.each do |t| %>
+                <p><%= t.name %></p>
+            <% end %>
+        </div>
+    </div>
+</div>
+
