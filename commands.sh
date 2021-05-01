@@ -1157,3 +1157,13 @@ $ rails generate kaminari:views github
       downloading app/views/kaminari/_prev_page.html.erb from kaminari_themes...
       create  app/views/kaminari/_prev_page.html.erb
 
+# Portoflio position Migration 
+
+cristian@debian-host:~/proyectos_rails/devcamp_portfolio/devcamp_portfolio$ rails g migration add_position_to_portfolios position:integer
+
+cristian@debian-host:~/proyectos_rails/devcamp_portfolio/devcamp_portfolio$ rails db:migrate
+== 20210501184519 AddPositionToPortfolios: migrating ==========================
+-- add_column(:portfolios, :position, :integer)
+   -> 0.0645s
+== 20210501184519 AddPositionToPortfolios: migrated (0.0646s) =================
+
