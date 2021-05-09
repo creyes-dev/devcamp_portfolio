@@ -1255,3 +1255,126 @@ Using web-console 3.7.0
 Bundle complete! 22 Gemfile dependencies, 78 gems now installed.
 Use `bundle info [gemname]` to see where a bundled gem is installed.
 
+# Installing carrierwave with aws support
+
+$ bundle install
+Fetching gem metadata from https://rubygems.org/............
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies...
+Using rake 13.0.3
+Using concurrent-ruby 1.1.8
+Using i18n 1.8.9
+Using minitest 5.14.4
+Using thread_safe 0.3.6
+Using tzinfo 1.2.9
+Using activesupport 5.0.7.2
+Using builder 3.2.4
+Using erubis 2.7.0
+Using mini_portile2 2.4.0
+Using nokogiri 1.10.10
+Using rails-dom-testing 2.0.3
+Using crass 1.0.6
+Using loofah 2.9.0
+Using rails-html-sanitizer 1.3.0
+Using actionview 5.0.7.2
+Using rack 2.2.3
+Using rack-test 0.6.3
+Using actionpack 5.0.7.2
+Using nio4r 2.5.7
+Using websocket-extensions 0.1.5
+Using websocket-driver 0.6.5
+Using actioncable 5.0.7.2
+Using globalid 0.4.2
+Using activejob 5.0.7.2
+Using mini_mime 1.0.2
+Using mail 2.7.1
+Using actionmailer 5.0.7.2
+Using activemodel 5.0.7.2
+Using arel 7.1.4
+Using activerecord 5.0.7.2
+Using execjs 2.7.0
+Using autoprefixer-rails 10.2.4.0
+Fetching aws-eventstream 1.1.1
+Installing aws-eventstream 1.1.1
+Fetching aws-partitions 1.452.0
+Installing aws-partitions 1.452.0
+Fetching aws-sigv4 1.2.3
+Installing aws-sigv4 1.2.3
+Fetching jmespath 1.4.0
+Installing jmespath 1.4.0
+Fetching aws-sdk-core 3.114.0
+Installing aws-sdk-core 3.114.0
+Fetching aws-sdk-kms 1.43.0
+Installing aws-sdk-kms 1.43.0
+Fetching aws-sdk-s3 1.94.1
+Installing aws-sdk-s3 1.94.1
+Using bcrypt 3.1.16
+Using bindex 0.8.1
+Using popper_js 1.16.0
+Using rb-fsevent 0.10.4
+Using ffi 1.15.0
+Using rb-inotify 0.10.1
+Using sass-listen 4.0.0
+Using sass 3.7.4
+Using bootstrap 4.0.0
+Using bundler 1.17.3
+Using byebug 11.1.3
+Fetching mime-types-data 3.2021.0225
+Installing mime-types-data 3.2021.0225
+Fetching mime-types 3.3.1
+Installing mime-types 3.3.1
+Fetching ssrf_filter 1.0.7
+Installing ssrf_filter 1.0.7
+Fetching carrierwave 1.3.2
+Installing carrierwave 1.3.2
+Fetching carrierwave-aws 1.4.0
+Installing carrierwave-aws 1.4.0
+Using coffee-script-source 1.12.2
+Using coffee-script 2.4.1
+Using method_source 1.0.0
+Using thor 1.1.0
+Using railties 5.0.7.2
+Using coffee-rails 4.2.2
+Using orm_adapter 0.5.0
+Using responders 3.0.1
+Using warden 1.2.9
+Using devise 4.7.3
+Fetching dotenv 2.7.6
+Installing dotenv 2.7.6
+Fetching dotenv-rails 2.7.6
+Installing dotenv-rails 2.7.6
+Using font-awesome-rails 4.7.0.7
+Using friendly_id 5.1.0
+Using jbuilder 2.11.2
+Using jquery-rails 4.4.0
+Using jquery-ui-rails 6.0.1
+Using kaminari-core 1.2.1
+Using kaminari-actionview 1.2.1
+Using kaminari-activerecord 1.2.1
+Using kaminari 1.2.1
+Using listen 3.0.8
+Fetching mini_magick 4.11.0
+Installing mini_magick 4.11.0
+Using petergate 1.9.1
+Using pg 0.21.0
+Using puma 3.12.6
+Using sprockets 3.7.2
+Using sprockets-rails 3.2.2
+Using rails 5.0.7.2
+Using tilt 2.0.10
+Using sass-rails 5.0.7
+Using spring 2.1.1
+Using spring-watcher-listen 2.0.1
+Using turbolinks-source 5.2.0
+Using turbolinks 5.2.1
+Using uglifier 4.2.0
+Using web-console 3.7.0
+Bundle complete! 26 Gemfile dependencies, 93 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+
+# Creating portfolio uploader
+
+$ rails generate uploader Portfolio
+Running via Spring preloader in process 8995
+      create  app/uploaders/portfolio_uploader.rb
+
