@@ -1,11 +1,10 @@
 class Portfolio < ApplicationRecord
     has_many :technologies
-    include Placeholder
 
     accepts_nested_attributes_for :technologies, 
                                     reject_if: lambda { |attrs| attrs['name'].blank? }
 
-    validates_presence_of :title, :body, :main_image, :thumb_image
+    validates_presence_of :title, :body
     
     mount_uploader :thumb_image, PortfolioUploader
     mount_uploader :main_image, PortfolioUploader
@@ -22,10 +21,4 @@ class Portfolio < ApplicationRecord
     # Retrieve all portfolio items with Ruby on rails subtitle
     scope :ruby_on_rails_portfolio_items, -> { where(subtitle: 'Ruby on rails') }
 
-    after_initialize :set_defaults
-
-    def set_defaults
-        self.main_image ||= Placeholder.image_generator(600,400) # if self.main_image.is_nil? self.main_image = "https://via.placeholder.com/600x400"
-        self.thumb_image ||= Placeholder.image_generator(350,200) 
-    end
 end
